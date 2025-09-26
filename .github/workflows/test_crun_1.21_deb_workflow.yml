@@ -1,4 +1,4 @@
-name: Create .deb files for podman version
+name: Run Script in Container
 
 on: [push]
 
@@ -14,11 +14,11 @@ jobs:
 
       - name: Verify script exists
         run:
-          ls -la create_deb_files.sh
+          ls -la scripts/create_crun_1.21_deb_files.sh
 
-      - name: Run the  script to generate .deb files
+      - name: Run script to generate crun-1.21 .deb files
         run:
-          bash .create_deb_files.sh
+          bash ./scripts/create_crun_1.21_deb_files.sh
 
       - name: Debug, Check deb_files directory
         run: |
@@ -35,7 +35,7 @@ jobs:
             echo "Contents of ./deb_files/:"
             ls -la ./deb_files/ 2>/dev/null || echo "None in ./deb_files/"
 
-      - name: Move .deb files to deb_files directory
+      - name: Move crun-1.21 .deb files to deb_files directory
         run: |
           mkdir -p ./deb_files
           mv *.deb ./deb_files/ || echo "No .deb files found in root directory."
@@ -57,10 +57,10 @@ jobs:
             exit 1
           fi
 
-      - name: Upload .deb files and SHA512SUMS as artifact
+      - name: Upload crun-1.21 .deb files and SHA512SUMS as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: debian-packages
+          name: debian-packages-crun-1.21
           path: |
             ./deb_files/*.deb
             ./deb_files/SHA512SUMS
