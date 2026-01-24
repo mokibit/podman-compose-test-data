@@ -6,7 +6,4 @@ cd debian-for-crun-1.21
 ./autogen.sh
 ./configure
 make
-cd ..
-tar -czvf crun_1.21.orig.tar.gz debian-for-crun-1.21/
-cd debian-for-crun-1.21
-DEB_BUILD_OPTIONS=nocheck debuild -us -uc
+DEB_BUILD_OPTIONS=nocheck debuild -us -uc -b
