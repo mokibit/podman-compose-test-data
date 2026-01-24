@@ -1,10 +1,10 @@
-name: Run Script in Container
+name: Create crun-1.21 .deb files
 
 on: [push]
 
 jobs:
   build:
-    name: Run script in Debian Bookworm
+    name: Create crun-1.21 .deb files
     runs-on: ubuntu-latest
     container:
       image: "debian:bookworm"
@@ -24,12 +24,10 @@ jobs:
         run: |
           mkdir -p ./deb_files
           mv *.deb ./deb_files/ || echo "No .deb files found in root directory."
-
       - name: Verify files were moved
         run: |
           echo "Files in deb_files:"
           ls -la ./deb_files/
-
       - name: Calculate SHA-512 checksums
         run: |
           cd ./deb_files
@@ -45,7 +43,6 @@ jobs:
       - name: Upload crun-1-21 deb files and SHA512SUMS as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: debian-packages-crun-1-21
+          name: deb-files-crun-1-21
           path: ./deb_files/
           if-no-files-found: error
-
